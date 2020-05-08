@@ -1,3 +1,8 @@
+# Notes
+`npx create-react-app pokemon`  
+`npm i axios @material-ui/core @material-ui/icons react-router-dom`  
+
+# Generated Doc
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
