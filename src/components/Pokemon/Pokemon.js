@@ -1,13 +1,31 @@
-import React, { useState } from 'react'
-import mockData from '../../data/mockData'
-import { Typography, Link } from '@material-ui/core'
+import React, { useState, useEffect } from 'react'
+import { useParams, useHistory } from "react-router-dom"; // > V5.1
+import { Typography, Link, CircularProgress, Button } from '@material-ui/core'
 import { toFirstCharUpperCase } from '../../utils/helpers'
+import axios from 'axios'
 
-const Pokemon = ({ match }) => {
-    const pokemonId = match.params.pokemonId
+const Pokemon = () => {
 
-    const [pokemon, setPokemon] = useState(mockData[`${pokemonId}`])
+    const { pokemonId } = useParams();
+    let history = useHistory();
 
+    // old way of getting the params and history
+    // const Pokemon = ({ history, match }) => {
+    // const pokemonId = match.params.pokemonId
+
+    const [pokemon, setPokemon] = useState(undefined)
+
+    useEffect(() => {
+        axios
+            .get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
+            .then((response) => {
+                const { data } = response
+                setPokemon(data)
+            })
+            .catch((error) => {
+                setPokemon(false)
+            })
+    }, [pokemonId])
 
     const generatePokemonJSX = () => {
         const { id, name, species, height, weight, types, sprites } = pokemon
@@ -40,7 +58,13 @@ const Pokemon = ({ match }) => {
 
     return (
         <>
-            {generatePokemonJSX()}
+            {pokemon === undefined && <CircularProgress />}
+            {pokemon !== undefined && pokemon && generatePokemonJSX()}
+            {pokemon === false && <Typography>Pokemon not found</Typography>}
+            {pokemon !== undefined &&
+                <Button variant='contained' onClick={() => history.push('/')}>
+                    Back to Pokedex
+            </Button>}
         </>
     )
 }

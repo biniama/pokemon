@@ -5,6 +5,9 @@
 # Pokemon API
 https://pokeapi.co/
 
+# Resources
+[Router Hooks](https://dev.to/finallynero/hooks-introduced-in-react-router-v5-1-7g8)
+
 # Generated Doc
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
